@@ -141,6 +141,19 @@
     .content-container {
       scroll-margin-top: 5rem;
     }
+    
+    /* Mobile layout fixes */
+    .mobile-layout {
+      min-height: 100vh;
+      min-height: 100dvh; /* Dynamic viewport height for mobile */
+    }
+    
+    /* Prevent content from being hidden */
+    .mobile-safe-content {
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+    }
+  }
   }
 }
 

@@ -9,7 +9,7 @@ import { User, Bell, Shield, Database, Palette, Globe } from "lucide-react";
 const Settings = () => {
   return (
     <AppLayout title="Settings" description="Manage your account and application preferences.">
-      <div className="max-w-3xl space-y-8 pb-8">
+      <div className="max-w-3xl space-y-8">
         {/* Profile Section */}
         <div className="space-y-4 animate-fade-in">
           <div className="flex items-center gap-3">
@@ -141,9 +141,6 @@ const Settings = () => {
             <Button variant="outline">View Audit Log</Button>
           </div>
         </div>
-
-        {/* Extra spacing to ensure footer doesn't overlap */}
-        <div className="h-8"></div>
       </div>
     </AppLayout>
   );
