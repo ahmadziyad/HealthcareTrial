@@ -46,10 +46,10 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 h-screen border-r border-border bg-card transition-all duration-300 flex flex-col",
+        "fixed left-0 top-0 z-50 h-screen border-r border-border bg-card transition-all duration-300 flex flex-col shadow-lg",
         sidebarWidth,
         sidebarTransform,
-        isMobile && "shadow-xl"
+        isMobile && "shadow-2xl"
       )}
     >
       {/* Logo */}

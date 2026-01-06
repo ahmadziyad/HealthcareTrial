@@ -15,7 +15,7 @@ export function AppLayout({ children, title, description }: AppLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background">
       <Sidebar 
         isMobile={isMobile} 
         isOpen={sidebarOpen} 
@@ -30,17 +30,26 @@ export function AppLayout({ children, title, description }: AppLayoutProps) {
         />
       )}
       
-      <div className={`transition-all duration-300 flex flex-col flex-1 ${isMobile ? 'pl-0' : 'pl-64'}`}>
-        <TopBar 
-          title={title} 
-          description={description}
-          isMobile={isMobile}
-          onMenuClick={() => setSidebarOpen(true)}
-        />
-        <main className={`flex-1 p-4 ${isMobile ? 'px-4' : 'p-6'}`}>
+      <div className={`min-h-screen flex flex-col transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
+        {/* Fixed TopBar */}
+        <div className="sticky top-0 z-20">
+          <TopBar 
+            title={title} 
+            description={description}
+            isMobile={isMobile}
+            onMenuClick={() => setSidebarOpen(true)}
+          />
+        </div>
+        
+        {/* Main Content with proper spacing */}
+        <main className={`flex-1 ${isMobile ? 'px-4 py-6' : 'px-6 py-8'} pb-24`}>
           {children}
         </main>
-        <Footer />
+        
+        {/* Fixed Footer */}
+        <div className="mt-auto">
+          <Footer />
+        </div>
       </div>
     </div>
   );
