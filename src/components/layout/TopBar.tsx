@@ -15,7 +15,7 @@ export function TopBar({ title, description, isMobile = false, onMenuClick }: To
   const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   return (
-    <header className="w-full border-b border-border bg-card/95 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-20 w-full border-b border-border bg-card/95 backdrop-blur-md shadow-sm">
       <div className="flex h-16 items-center justify-between px-4 md:px-6 gap-4">
         {/* Left Section */}
         <div className="flex items-center gap-3 min-w-0 flex-1">

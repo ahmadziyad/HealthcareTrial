@@ -30,26 +30,22 @@ export function AppLayout({ children, title, description }: AppLayoutProps) {
         />
       )}
       
-      <div className={`min-h-screen flex flex-col transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
+      <div className={`min-h-screen transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
         {/* Fixed TopBar */}
-        <div className="sticky top-0 z-20">
-          <TopBar 
-            title={title} 
-            description={description}
-            isMobile={isMobile}
-            onMenuClick={() => setSidebarOpen(true)}
-          />
-        </div>
+        <TopBar 
+          title={title} 
+          description={description}
+          isMobile={isMobile}
+          onMenuClick={() => setSidebarOpen(true)}
+        />
         
-        {/* Main Content with proper spacing */}
-        <main className={`flex-1 ${isMobile ? 'px-4 py-6' : 'px-6 py-8'} pb-24`}>
+        {/* Main Content with proper spacing to prevent footer overlap */}
+        <main className={`${isMobile ? 'px-4 pt-6' : 'px-6 pt-8'} pb-32 min-h-[calc(100vh-12rem)]`}>
           {children}
         </main>
         
-        {/* Fixed Footer */}
-        <div className="mt-auto">
-          <Footer />
-        </div>
+        {/* Footer */}
+        <Footer />
       </div>
     </div>
   );

@@ -60,7 +60,7 @@ const faqs = [
 const Help = () => {
   return (
     <AppLayout title="Help Center" description="Find answers and get support for ClinicalCoord.">
-      <div className="space-y-8">
+      <div className="space-y-8 pb-8">
         {/* Search */}
         <div className="max-w-xl mx-auto animate-fade-in">
           <div className="relative">
@@ -129,6 +129,9 @@ const Help = () => {
             </Button>
           </div>
         </div>
+
+        {/* Extra spacing to ensure footer doesn't overlap */}
+        <div className="h-8"></div>
       </div>
     </AppLayout>
   );

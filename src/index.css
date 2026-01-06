@@ -131,6 +131,16 @@
     .sticky-header {
       top: env(safe-area-inset-top);
     }
+    
+    /* Add top margin to account for sticky header */
+    .main-content {
+      margin-top: 1rem;
+    }
+    
+    /* Ensure content is not hidden behind header */
+    .content-container {
+      scroll-margin-top: 5rem;
+    }
   }
 }
 
