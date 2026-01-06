@@ -2,7 +2,8 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { TrialCard } from "@/components/dashboard/TrialCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { trials } from "@/data/mockData";
+import { AddTrialModal } from "@/components/forms/AddTrialModal";
+import { trials, Trial } from "@/data/mockData";
 import { Search, Plus, Filter, Grid3X3, List } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -10,12 +11,23 @@ import { cn } from "@/lib/utils";
 const Trials = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [trialsList, setTrialsList] = useState<Trial[]>(trials);
 
-  const filteredTrials = trials.filter(
+  const filteredTrials = trialsList.filter(
     (trial) =>
       trial.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       trial.id.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleAddTrial = (newTrialData: Omit<Trial, "id">) => {
+    const newTrial: Trial = {
+      ...newTrialData,
+      id: `TRIAL-${String(Math.floor(Math.random() * 900) + 100).padStart(3, '0')}`,
+    };
+    
+    setTrialsList([newTrial, ...trialsList]);
+  };
 
   return (
     <AppLayout
@@ -34,8 +46,8 @@ const Trials = () => {
               className="pl-9"
             />
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
               <Filter className="h-4 w-4 mr-2" />
               Filter
             </Button>
@@ -44,7 +56,7 @@ const Trials = () => {
                 variant={viewMode === "grid" ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setViewMode("grid")}
-                className="rounded-none"
+                className="rounded-none px-3"
               >
                 <Grid3X3 className="h-4 w-4" />
               </Button>
@@ -52,14 +64,19 @@ const Trials = () => {
                 variant={viewMode === "list" ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setViewMode("list")}
-                className="rounded-none"
+                className="rounded-none px-3"
               >
                 <List className="h-4 w-4" />
               </Button>
             </div>
-            <Button size="sm" className="gradient-primary text-primary-foreground">
+            <Button 
+              size="sm" 
+              className="gradient-primary text-primary-foreground flex-1 sm:flex-none"
+              onClick={() => setShowAddModal(true)}
+            >
               <Plus className="h-4 w-4 mr-2" />
-              New Trial
+              <span className="hidden xs:inline">New Trial</span>
+              <span className="xs:hidden">New</span>
             </Button>
           </div>
         </div>
@@ -92,6 +109,12 @@ const Trials = () => {
           </div>
         )}
       </div>
+
+      <AddTrialModal
+        open={showAddModal}
+        onOpenChange={setShowAddModal}
+        onSubmit={handleAddTrial}
+      />
     </AppLayout>
   );
 };

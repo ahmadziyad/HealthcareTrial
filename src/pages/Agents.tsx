@@ -1,7 +1,9 @@
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { agents } from "@/data/mockData";
+import { AddAgentModal } from "@/components/forms/AddAgentModal";
+import { ConfigureAgentModal } from "@/components/forms/ConfigureAgentModal";
+import { agents, Agent } from "@/data/mockData";
 import {
   Bot,
   Zap,
@@ -12,8 +14,10 @@ import {
   Settings,
   Play,
   Pause,
+  Square,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const statusConfig = {
   online: { label: "Online", variant: "success" as const },
@@ -23,6 +27,81 @@ const statusConfig = {
 };
 
 const Agents = () => {
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showConfigureModal, setShowConfigureModal] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [agentsList, setAgentsList] = useState<Agent[]>(agents);
+
+  const handleAddAgent = (newAgentData: Omit<Agent, "id" | "messagesProcessed" | "uptime" | "lastMessage">) => {
+    const newAgent: Agent = {
+      ...newAgentData,
+      id: `agent-${String(Math.floor(Math.random() * 900) + 100).padStart(3, '0')}`,
+      messagesProcessed: 0,
+      uptime: "0%",
+      lastMessage: "Agent initialized and ready for deployment",
+    };
+    
+    setAgentsList([newAgent, ...agentsList]);
+  };
+
+  const handleConfigureAgent = (agent: Agent) => {
+    setSelectedAgent(agent);
+    setShowConfigureModal(true);
+  };
+
+  const handleSaveAgentConfig = (agentId: string, updates: Partial<Agent>) => {
+    setAgentsList(agentsList.map(agent => 
+      agent.id === agentId ? { ...agent, ...updates } : agent
+    ));
+  };
+
+  const handleToggleAgentStatus = (agentId: string) => {
+    setAgentsList(agentsList.map(agent => {
+      if (agent.id === agentId) {
+        let newStatus: Agent['status'];
+        let newMessage: string;
+        
+        if (agent.status === 'offline') {
+          newStatus = 'online';
+          newMessage = `Agent started and is now online`;
+        } else if (agent.status === 'online' || agent.status === 'processing') {
+          newStatus = 'offline';
+          newMessage = `Agent paused and is now offline`;
+        } else {
+          newStatus = 'offline';
+          newMessage = `Agent stopped from error state`;
+        }
+        
+        return {
+          ...agent,
+          status: newStatus,
+          lastMessage: newMessage,
+        };
+      }
+      return agent;
+    }));
+  };
+
+  const handleStopAgent = (agentId: string) => {
+    setAgentsList(agentsList.map(agent => 
+      agent.id === agentId 
+        ? { 
+            ...agent, 
+            status: 'offline' as const,
+            lastMessage: 'Agent stopped by user'
+          } 
+        : agent
+    ));
+  };
+
+  const handleSyncAllAgents = () => {
+    setAgentsList(agentsList.map(agent => ({
+      ...agent,
+      lastMessage: 'Sync completed successfully',
+      messagesProcessed: agent.messagesProcessed + Math.floor(Math.random() * 10) + 1,
+    })));
+  };
+
   return (
     <AppLayout
       title="Agent Network"
@@ -38,7 +117,7 @@ const Agents = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-foreground">
-                  {agents.filter((a) => a.type === "A2A").length}
+                  {agentsList.filter((a) => a.type === "A2A").length}
                 </p>
                 <p className="text-sm text-muted-foreground">A2A Agents</p>
               </div>
@@ -51,7 +130,7 @@ const Agents = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-foreground">
-                  {agents.filter((a) => a.type === "MCP").length}
+                  {agentsList.filter((a) => a.type === "MCP").length}
                 </p>
                 <p className="text-sm text-muted-foreground">MCP Agents</p>
               </div>
@@ -64,7 +143,7 @@ const Agents = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-foreground">
-                  {agents.filter((a) => a.status === "online" || a.status === "processing").length}
+                  {agentsList.filter((a) => a.status === "online" || a.status === "processing").length}
                 </p>
                 <p className="text-sm text-muted-foreground">Active Now</p>
               </div>
@@ -77,7 +156,7 @@ const Agents = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-foreground">
-                  {agents.reduce((acc, a) => acc + a.messagesProcessed, 0).toLocaleString()}
+                  {agentsList.reduce((acc, a) => acc + a.messagesProcessed, 0).toLocaleString()}
                 </p>
                 <p className="text-sm text-muted-foreground">Messages Processed</p>
               </div>
@@ -89,11 +168,15 @@ const Agents = () => {
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-foreground">All Agents</h3>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleSyncAllAgents}>
               <RefreshCw className="h-4 w-4 mr-2" />
               Sync All
             </Button>
-            <Button size="sm" className="gradient-primary text-primary-foreground">
+            <Button 
+              size="sm" 
+              className="gradient-primary text-primary-foreground"
+              onClick={() => setShowAddModal(true)}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Agent
             </Button>
@@ -102,7 +185,7 @@ const Agents = () => {
 
         {/* Agents Grid */}
         <div className="grid gap-4 lg:grid-cols-2">
-          {agents.map((agent, index) => {
+          {agentsList.map((agent, index) => {
             const config = statusConfig[agent.status];
 
             return (
@@ -181,7 +264,7 @@ const Agents = () => {
 
                   {/* Capabilities */}
                   <div className="flex flex-wrap gap-2">
-                    {agent.capabilities.map((cap) => (
+                    {agent.capabilities.slice(0, 3).map((cap) => (
                       <span
                         key={cap}
                         className="px-2 py-1 text-xs font-medium rounded-full bg-muted text-muted-foreground"
@@ -189,23 +272,54 @@ const Agents = () => {
                         {cap}
                       </span>
                     ))}
+                    {agent.capabilities.length > 3 && (
+                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-muted text-muted-foreground">
+                        +{agent.capabilities.length - 3} more
+                      </span>
+                    )}
                   </div>
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 pt-2 border-t border-border">
-                    <Button variant="outline" size="sm" className="flex-1">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => handleConfigureAgent(agent)}
+                    >
                       <Settings className="h-4 w-4 mr-2" />
                       Configure
                     </Button>
-                    {agent.status === "offline" ? (
-                      <Button variant="outline" size="sm" className="flex-1">
+                    
+                    {agent.status === "offline" || agent.status === "error" ? (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="flex-1"
+                        onClick={() => handleToggleAgentStatus(agent.id)}
+                      >
                         <Play className="h-4 w-4 mr-2" />
                         Start
                       </Button>
                     ) : (
-                      <Button variant="outline" size="sm" className="flex-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="flex-1"
+                        onClick={() => handleToggleAgentStatus(agent.id)}
+                      >
                         <Pause className="h-4 w-4 mr-2" />
                         Pause
+                      </Button>
+                    )}
+                    
+                    {(agent.status === "online" || agent.status === "processing") && (
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleStopAgent(agent.id)}
+                      >
+                        <Square className="h-4 w-4" />
                       </Button>
                     )}
                   </div>
@@ -215,6 +329,19 @@ const Agents = () => {
           })}
         </div>
       </div>
+
+      <AddAgentModal
+        open={showAddModal}
+        onOpenChange={setShowAddModal}
+        onSubmit={handleAddAgent}
+      />
+
+      <ConfigureAgentModal
+        open={showConfigureModal}
+        onOpenChange={setShowConfigureModal}
+        agent={selectedAgent}
+        onSave={handleSaveAgentConfig}
+      />
     </AppLayout>
   );
 };

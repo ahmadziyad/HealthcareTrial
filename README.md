@@ -2,7 +2,24 @@
 
 ## Project info
 
-A2A & MCP Clinical Trial Coordination platform.
+A2A & MCP Clinical Trial Coordination platform - A comprehensive clinical trial management system with agent-based automation and real-time coordination capabilities.
+
+## Features
+
+- **Dashboard**: Real-time monitoring of trials, sites, and agent integrations
+- **Agent Network**: A2A and MCP agent management with configuration and control
+- **Site Management**: Trial site coordination and status monitoring  
+- **Trial Management**: Complete trial lifecycle management
+- **Patient Enrollment**: Patient tracking and visit scheduling
+- **Reports**: Analytics and compliance reporting
+- **Mobile Responsive**: Full mobile support with touch-friendly interface
+
+## Contact
+
+**Feel free to contact me for a full demo and backend overview:**
+
+- **LinkedIn**: [https://www.linkedin.com/in/ahmadziyad/](https://www.linkedin.com/in/ahmadziyad/)
+- **Email**: [ah.ziyad@gmail.com](mailto:ah.ziyad@gmail.com)
 
 ## How can I edit this code?
 

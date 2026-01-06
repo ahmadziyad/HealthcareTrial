@@ -3,7 +3,8 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { sites } from "@/data/mockData";
+import { AddSiteModal } from "@/components/forms/AddSiteModal";
+import { sites, Site, trials } from "@/data/mockData";
 import {
   Search,
   Plus,
@@ -28,12 +29,30 @@ const statusConfig = {
 
 const Sites = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [sitesList, setSitesList] = useState<Site[]>(sites);
 
-  const filteredSites = sites.filter(
+  const filteredSites = sitesList.filter(
     (site) =>
       site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       site.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const availableTrials = trials.map(trial => ({
+    id: trial.id,
+    name: trial.name
+  }));
+
+  const handleAddSite = (newSiteData: Omit<Site, "id" | "lastSync" | "enrolled">) => {
+    const newSite: Site = {
+      ...newSiteData,
+      id: `SITE-${String(Math.floor(Math.random() * 900) + 100).padStart(3, '0')}`,
+      lastSync: "Just now",
+      enrolled: 0,
+    };
+    
+    setSitesList([newSite, ...sitesList]);
+  };
 
   return (
     <AppLayout
@@ -61,7 +80,11 @@ const Sites = () => {
               <RefreshCw className="h-4 w-4 mr-2" />
               Sync All
             </Button>
-            <Button size="sm" className="gradient-primary text-primary-foreground">
+            <Button 
+              size="sm" 
+              className="gradient-primary text-primary-foreground"
+              onClick={() => setShowAddModal(true)}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Site
             </Button>
@@ -153,6 +176,13 @@ const Sites = () => {
           </div>
         )}
       </div>
+
+      <AddSiteModal
+        open={showAddModal}
+        onOpenChange={setShowAddModal}
+        onSubmit={handleAddSite}
+        availableTrials={availableTrials}
+      />
     </AppLayout>
   );
 };
