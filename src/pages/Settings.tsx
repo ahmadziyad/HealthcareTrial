@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { User, Bell, Shield, Database, Palette, Globe } from "lucide-react";
+import { User, Bell, Shield, Database } from "lucide-react";
 
 const Settings = () => {
   return (

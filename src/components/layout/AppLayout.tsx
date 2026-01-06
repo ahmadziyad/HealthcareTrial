@@ -31,8 +31,8 @@ export function AppLayout({ children, title, description }: AppLayoutProps) {
       )}
       
       <div className={`min-h-screen flex flex-col transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
-        {/* TopBar - Fixed at top */}
-        <div className="sticky top-0 z-20 shrink-0">
+        {/* TopBar - Non-sticky on mobile to prevent overlap */}
+        <div className={isMobile ? 'relative z-20 shrink-0' : 'sticky top-0 z-20 shrink-0'}>
           <TopBar 
             title={title} 
             description={description}
@@ -42,7 +42,7 @@ export function AppLayout({ children, title, description }: AppLayoutProps) {
         </div>
         
         {/* Main Content - Flex grow to fill space */}
-        <main className={`flex-1 ${isMobile ? 'px-4 py-4' : 'px-6 py-6'} overflow-y-auto`}>
+        <main className={`flex-1 overflow-y-auto ${isMobile ? 'px-3 py-3' : 'px-6 py-6'}`}>
           <div className="w-full">
             {children}
           </div>

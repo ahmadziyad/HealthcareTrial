@@ -127,31 +127,27 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
     
-    /* Fix header overlap issues */
-    .sticky-header {
-      top: env(safe-area-inset-top);
-    }
-    
-    /* Add top margin to account for sticky header */
-    .main-content {
-      margin-top: 1rem;
-    }
-    
-    /* Ensure content is not hidden behind header */
-    .content-container {
-      scroll-margin-top: 5rem;
-    }
-    
-    /* Mobile layout fixes */
+    /* Mobile layout fixes - prevent content overlap */
     .mobile-layout {
       min-height: 100vh;
       min-height: 100dvh; /* Dynamic viewport height for mobile */
     }
     
-    /* Prevent content from being hidden */
+    /* Prevent content from being hidden behind header/footer */
     .mobile-safe-content {
-      padding-top: 1rem;
-      padding-bottom: 2rem;
+      padding-top: 0.5rem;
+      padding-bottom: 1rem;
+    }
+    
+    /* Ensure content doesn't get cut off */
+    .content-container {
+      margin-bottom: 2rem;
+    }
+    
+    /* Compact mobile spacing */
+    .mobile-compact {
+      padding: 0.75rem;
+      margin: 0.5rem 0;
     }
   }
   }

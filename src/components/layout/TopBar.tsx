@@ -53,7 +53,7 @@ export function TopBar({ title, description, isMobile = false, onMenuClick }: To
               variant="ghost"
               size="icon"
               onClick={() => setShowMobileSearch(!showMobileSearch)}
-              className="shrink-0 h-8 w-8"
+              className="shrink-0 h-7 w-7"
             >
               <Search className="h-3 w-3" />
             </Button>
@@ -77,15 +77,15 @@ export function TopBar({ title, description, isMobile = false, onMenuClick }: To
             Online
           </StatusBadge>
 
-          <Button variant="ghost" size="icon" className={`relative shrink-0 ${isMobile ? 'h-8 w-8' : 'h-10 w-10'}`}>
+          <Button variant="ghost" size="icon" className={`relative shrink-0 ${isMobile ? 'h-7 w-7' : 'h-10 w-10'}`}>
             <Bell className="h-3 w-3" />
             <span className={`absolute -top-0.5 -right-0.5 rounded-full bg-accent text-[8px] font-bold text-accent-foreground flex items-center justify-center ${isMobile ? 'h-2 w-2' : 'h-3 w-3'}`}>
               3
             </span>
           </Button>
 
-          <Button variant="ghost" size="icon" className={`rounded-full shrink-0 ${isMobile ? 'h-8 w-8' : 'h-10 w-10'}`}>
-            <div className={`rounded-full gradient-primary flex items-center justify-center ${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`}>
+          <Button variant="ghost" size="icon" className={`rounded-full shrink-0 ${isMobile ? 'h-7 w-7' : 'h-10 w-10'}`}>
+            <div className={`rounded-full gradient-primary flex items-center justify-center ${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`}>
               <User className="h-3 w-3 text-primary-foreground" />
             </div>
           </Button>
@@ -94,12 +94,12 @@ export function TopBar({ title, description, isMobile = false, onMenuClick }: To
       
       {/* Mobile Search Bar */}
       {isMobile && showMobileSearch && (
-        <div className="px-4 pb-2 border-b border-border bg-card">
+        <div className="px-3 pb-2 border-b border-border bg-card">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
             <Input
               placeholder="Search..."
-              className="pl-8 bg-secondary/50 border-transparent focus:border-primary focus:bg-card h-8 text-sm"
+              className="pl-7 bg-secondary/50 border-transparent focus:border-primary focus:bg-card h-7 text-xs"
               autoFocus
             />
           </div>
