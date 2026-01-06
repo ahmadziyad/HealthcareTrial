@@ -16,6 +16,8 @@ The **Dashboard** is your central command center. It provides a high-level view 
 *   **Data Quality**: Real-time metric of data integrity.
 *   **Agent Status**: Quick status of your AI agent network.
 
+![Dashboard Screenshot](file:///C:/Users/ahziy/.gemini/antigravity/brain/072efc97-bbec-4af4-ae5a-a6146d137a50/clinicalcoord_page_1765691175772.png)
+
 ## Trials Management
 
 The **Trials** section allows you to monitor specific clinical trials. Here you can:
@@ -24,6 +26,7 @@ The **Trials** section allows you to monitor specific clinical trials. Here you 
 *   Track enrollment progress against targets.
 *   Access detailed protocols and timelines.
 
+![Trials Page Screenshot](file:///C:/Users/ahziy/.gemini/antigravity/brain/072efc97-bbec-4af4-ae5a-a6146d137a50/trials_page_1765691398658.png)
 
 ## Site Coordination
 
@@ -33,6 +36,7 @@ The **Sites** section focuses on the management of clinical sites. Use this to:
 *   Identify sites that need attention or support.
 *   View geographic distribution of sites.
 
+![Sites Page Screenshot](file:///C:/Users/ahziy/.gemini/antigravity/brain/072efc97-bbec-4af4-ae5a-a6146d137a50/sites_page_1765691404918.png)
 
 ## Agent Network
 
@@ -41,3 +45,5 @@ The **Agent Network** is the heartbeat of the platform's automation. It displays
 *   **A2A Agents**: Agents communicating with other systems.
 *   **MCP Agents**: Model Context Protocol agents handling data and context.
 *   **Status Indicators**: Green for Online, Orange for Processing.
+
+![Agents Page Screenshot](file:///C:/Users/ahziy/.gemini/antigravity/brain/072efc97-bbec-4af4-ae5a-a6146d137a50/agents_page_1765691411042.png)
