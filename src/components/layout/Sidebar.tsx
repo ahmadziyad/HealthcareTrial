@@ -42,6 +42,7 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
   // On mobile, sidebar is either fully open or closed
   const sidebarWidth = isMobile ? (isOpen ? "w-64" : "w-0") : (collapsed ? "w-16" : "w-64");
   const sidebarTransform = isMobile && !isOpen ? "-translate-x-full" : "translate-x-0";
+  const sidebarVisibility = isMobile && !isOpen ? "invisible" : "visible";
 
   return (
     <aside
@@ -49,7 +50,8 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
         "fixed left-0 top-0 z-50 h-screen border-r border-border bg-card transition-all duration-300 flex flex-col shadow-lg",
         sidebarWidth,
         sidebarTransform,
-        isMobile && "shadow-2xl"
+        sidebarVisibility,
+        isMobile && "shadow-2xl backdrop-blur-sm"
       )}
     >
       {/* Logo */}
@@ -118,7 +120,7 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
             </div>
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-success animate-pulse-soft" />
-              <span className="text-xs text-muted-foreground">4 agents online</span>
+              <span className="text-xs text-foreground">4 agents online</span>
             </div>
           </div>
         )}
